@@ -1,159 +1,304 @@
-{% extends "base.html" %} 
-
-{% block title %}
-Sign up
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %} Sign up {% endblock %} {% block
+content %}
 <section class="vh-100">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6 px-0 d-none d-sm-block">
-                <img src="/static/Signup_pic.png" alt="Signup image" class="vh-100"
-                     style="object-fit: cover; 
-                     position: absolute; 
-                     left: 0; 
-                     width: 750px; 
-                     height: auto;">
-            </div>
-
-            
-                    
-            <div class="col-sm-6 text-black">
-                <div class="px-5 ms-xl-4" style="margin-top: -20px;">
-                    <i class="fa-regular fa-calendar-days fa-2x me-3 pt-5 mt-xl-4" style="color: rgb(167, 3, 3);"></i>
-                    <span class="h1 fw-bold mb-0" 
-                    style="font-family: Koulen; 
-                    color: rgb(167, 3, 3);">ETURO</span>
-                </div>
-                
-                <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-3 pt-5 pt-xl-0 mt-xl-n5">
-                    <form style="width: 23rem;" method="post">
-                        <h3 class="fw-normal mb-3 pb-3" 
-                        style="letter-spacing: 1px; 
-                        font-family: Koulen;">Sign up</h3>
-
-
-
-                        <!-- 2 column grid layout with text inputs for the first and last names -->
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-                                <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label" for="firstName">First name</label>
-                                    <input 
-                                    type="text"
-                                     id="firstName" 
-                                     class="form-control" 
-                                     name="firstName" 
-                                     placeholder="First Name"/>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-4">
-                                <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label" for="lastName">Last name</label>
-                                    <input 
-                                    type="text" 
-                                    id="lastName" 
-                                    class="form-control"
-                                     name="lastName" 
-                                     placeholder="Last Name"/>
-                                </div>
-                            </div>
-                        </div>
-                      
-                        <!-- Birthdate -->
-                        <div class="row mt-n3 custom-margin-top">
-                            <label class="form-label" for="Birthdate">Birthdate</label>
-                            <div class="col-md-4 mb-4">
-                                <div data-mdb-input-init class="form-outline">
-                                    <input type="text" 
-                                    id="Birthdate" 
-                                    class="form-control" 
-                                    name="year" 
-                                    placeholder="YYYY"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-4">
-                                <div data-mdb-input-init class="form-outline">
-                                    <input type="text" 
-                                    id="Birthdate" 
-                                    class="form-control" 
-                                    name="month" 
-                                    placeholder="MM"/>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-4">
-                                <div data-mdb-input-init class="form-outline">
-                                    <input type="text"
-                                     id="form3Example2" 
-                                     class="form-control" 
-                                     name="day" 
-                                     placeholder="DD"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <style>
-                            .custom-margin-top {
-                                margin-top: -15px; 
-                            }
-                        </style>
-                        
-                        <!-- Gender -->
-                        <style>
-                            .custom-btn {
-                                color: white;   
-                                background-color: rgba(91, 117, 47, 1);
-                            }
-                       </style>
-                        
-                        <div class="row mt-n3">
-                            <label class="form-label col-auto" for="Gender" style="margin-right: 10px;">Sex</label>
-                            <div class="col-auto">
-                                <div class="btn-group" style="margin-top: -5px; margin-left: -25px;">
-                                    <input type="radio" class="btn-check" name="sex" id="option1" autocomplete="off" checked />
-                                    <label class="btn custom-btn" for="option1" data-mdb-ripple-init style="width: 167px;">Male</label>
-                                    <input type="radio" class="btn-check" name="sex" id="option2" autocomplete="off" />
-                                    <label class="btn custom-btn" for="option2" data-mdb-ripple-init style="width: 167px;">Female</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        
-                        
-                        <!-- Email input -->
-                        <div data-mdb-input-init class="form-outline" style="margin-top: 12px; margin-bottom: 12px;">
-                            <label class="form-label" for="email">Email address</label>
-                            <input type="email" id="email" class="form-control" name="email" placeholder="Email@email.com"/>
-                        </div>
-                        
-                        
-
-                        <!-- Password input -->
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <label class="form-label" for="password1">Password</label>
-                            <input type="password1" id="password1" class="form-control" name="password1" />
-                        </div>
-                        <div data-mdb-input-init class="form-outline mb-4" style="margin-top: -15px; margin-bottom: 5px;">
-                            <label class="form-label" for="password2">Confirm Password</label>
-                            <input type="password" id="password2" class="form-control" name="password2" />
-                        </div>
-                        
-
-                        <!-- Submit button -->
-                        <button type="submit" data-mdb-button-init data-mdb-ripple-init 
-                        class="btn btn-block mb-4" 
-                        style="font-family: DM Mono;
-                         margin-left: 38%; 
-                        background-color: rgba(91, 117, 47, 1); 
-                        color: white; 
-                        font-size: 15px;">
-                            SIGN UP
-                        </button>
-                    </form>
-                </div>
-            </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6 px-0 d-none d-sm-block">
+        <!-- Left side orange box elements -->
+        <div
+          style="
+            width: 750px;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            background: #5b752f;
+          "
+        ></div>
+        <div
+          style="
+            width: 415px;
+            height: 152px;
+            padding: 10px;
+            left: 239.5px;
+            top: 272px;
+            position: absolute;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 10px;
+            display: inline-flex;
+          "
+        >
+          <div style="width: 410px; height: 117px; text-align: right">
+            <span
+              style="
+                color: white;
+                font-size: 47px;
+                font-family: Koulen;
+                font-weight: 400;
+                line-height: 26.1px;
+                letter-spacing: 1.65px;
+                word-wrap: break-word;
+              "
+              >SIGN In WITH<br /></span
+            ><span
+              style="
+                color: white;
+                font-size: 105px;
+                font-family: Koulen;
+                font-weight: 400;
+                line-height: 86.55px;
+                word-wrap: break-word;
+              "
+              >eturo</span
+            >
+          </div>
         </div>
+        <div
+          style="
+            width: 443.5px;
+            left: 211px;
+            top: 450px;
+            position: absolute;
+            text-align: right;
+            color: white;
+            font-size: 20px;
+            font-family: Inter;
+            font-weight: 300;
+            line-height: 19px;
+            word-wrap: break-word;
+          "
+        >
+          Craft your perfect journey effortlessly with our intuitive platform.
+          Tailored to your preferences, discover hidden gems and optimize your
+          schedule seamlessly.
+        </div>
+
+        <div
+          style="
+            width: 299.5px;
+            left: 355px;
+            top: 600px;
+            position: absolute;
+            text-align: right;
+            color: white;
+            font-size: 12px;
+            font-family: Inter;
+            font-weight: 400;
+            line-height: 13px;
+            word-wrap: break-word;
+          "
+        >
+          Created by GARBANZOS | SENYAHAN | SISTONA<br />EST.2024
+        </div>
+      </div>
+
+      <div class="col-sm-6 text-black">
+        <div class="px-5 ms-xl-4" style="margin-top: -20px">
+          <i
+            class="fa-regular fa-calendar-days fa-2x me-3 pt-5 mt-xl-4"
+            style="color: rgb(167, 3, 3)"
+          ></i>
+          <span
+            class="h1 fw-bold mb-0"
+            style="font-family: Koulen; color: rgb(167, 3, 3)"
+            >ETURO</span
+          >
+        </div>
+
+        <div
+          class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-3 pt-5 pt-xl-0 mt-xl-n5"
+        >
+          <form style="width: 23rem" method="post">
+            <h3
+              class="fw-normal mb-3 pb-3"
+              style="letter-spacing: 1px; font-family: Koulen"
+            >
+              Sign up
+            </h3>
+
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div data-mdb-input-init class="form-outline">
+                  <label class="form-label" for="firstName">First name</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    class="form-control"
+                    name="firstName"
+                    placeholder="First Name"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div data-mdb-input-init class="form-outline">
+                  <label class="form-label" for="lastName">Last name</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    class="form-control"
+                    name="lastName"
+                    placeholder="Last Name"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Birthdate -->
+            <div class="row mt-n3 custom-margin-top">
+              <label class="form-label" for="Birthdate">Birthdate</label>
+              <div class="col-md-4 mb-4">
+                <div data-mdb-input-init class="form-outline">
+                  <input
+                    type="text"
+                    id="Birthdate"
+                    class="form-control"
+                    name="year"
+                    placeholder="YYYY"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4 mb-4">
+                <div data-mdb-input-init class="form-outline">
+                  <input
+                    type="text"
+                    id="Birthdate"
+                    class="form-control"
+                    name="month"
+                    placeholder="MM"
+                  />
+                </div>
+              </div>
+              <div class="col-md-4 mb-4">
+                <div data-mdb-input-init class="form-outline">
+                  <input
+                    type="text"
+                    id="form3Example2"
+                    class="form-control"
+                    name="day"
+                    placeholder="DD"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <style>
+              .custom-margin-top {
+                margin-top: -15px;
+              }
+            </style>
+
+            <!-- Gender -->
+            <style>
+              .custom-btn {
+                color: white;
+                background-color: rgba(91, 117, 47, 1);
+              }
+            </style>
+
+            <div class="row mt-n3">
+              <label
+                class="form-label col-auto"
+                for="Gender"
+                style="margin-right: 10px"
+                >Sex</label
+              >
+              <div class="col-auto">
+                <div class="btn-group" style="margin-top: -5px">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="sex"
+                    id="option1"
+                    autocomplete="off"
+                    checked
+                  />
+                  <label
+                    class="btn custom-btn"
+                    for="option1"
+                    data-mdb-ripple-init
+                    style="width: 184px"
+                    >Male</label
+                  >
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="sex"
+                    id="option2"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn custom-btn"
+                    for="option2"
+                    data-mdb-ripple-init
+                    style="width: 184px"
+                    >Female</label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Email input -->
+            <div
+              data-mdb-input-init
+              class="form-outline"
+              style="margin-top: 12px; margin-bottom: 12px"
+            >
+              <label class="form-label" for="email">Email address</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                name="email"
+                placeholder="Email@email.com"
+              />
+            </div>
+
+            <!-- Password input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+              <label class="form-label" for="password1">Password</label>
+              <input
+                type="password1"
+                id="password1"
+                class="form-control"
+                name="password1"
+              />
+            </div>
+            <div
+              data-mdb-input-init
+              class="form-outline mb-4"
+              style="margin-top: -15px; margin-bottom: 5px"
+            >
+              <label class="form-label" for="password2">Confirm Password</label>
+              <input
+                type="password"
+                id="password2"
+                class="form-control"
+                name="password2"
+              />
+            </div>
+
+            <!-- Submit button -->
+            <button
+              type="submit"
+              data-mdb-button-init
+              data-mdb-ripple-init
+              class="btn btn-block mb-4"
+              style="
+                font-family: DM Mono;
+                background-color: rgba(91, 117, 47, 1);
+                color: white;
+                font-size: 15px;
+                width: 100%;
+              "
+            >
+              SIGN UP
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 {% endblock %}
