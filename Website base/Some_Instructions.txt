@@ -1,0 +1,20 @@
+Sites you may need:
+for images: https://unsplash.com/
+some templates for bootstrap you can copy paste: https://mdbootstrap.com/docs/standard/components/modal/
+
+some are for premium only but there is some that you can use
+
+how to reference an image in html: <img src="/static/sean-yoro-7PFVpaUb8UY-unsplash.jpg">
+just change sean-yoro-7PFVpaUb8UY-unsplash.jpg to any image we store in the static folder of our app
+
+examples are in our landingpage.html or login.html
+
+
+for other things about bootstrap: https://getbootstrap.com/docs/5.1/getting-started/introduction/
+
+check BaseInstructions.html in our folders
+
+to run the app: 
+#pip install flask #pip install flask-login
+
+then run main.py and copy the url code below in the terminal
