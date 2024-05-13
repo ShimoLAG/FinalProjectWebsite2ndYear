@@ -13,3 +13,7 @@ def landingpage():
 @views.route('/home')
 def home():
     return render_template("home.html")
+
+@views.route('/travel')
+def travel():
+    return render_template("travel.html")
