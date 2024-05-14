@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %} Travel {% endblock %}
+{% extends "base.html" %} {% block title%} Destinations {%endblock%}
 
 {% block head %}
 
@@ -12,13 +12,13 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: span; margin-left: 75%;">
             <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/home" style="color: white; font-family: Koulen; border: 1px solid; background-color: rgb(167, 3, 3); width: 70px; text-align: center; border-radius: 8px;"></i> Home</a>
+                <a class="nav-link" aria-current="page" href="/home" style="color: rgb(167, 3, 3); font-family: Koulen;"></i> Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/signup" style="color: rgb(167, 3, 3); font-family: Koulen;"> Plan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/itinerary" style="color: rgb(167, 3, 3); font-family: Koulen;"> Itinerary</a>
+                <a class="nav-link" href="/itinerary" style="color: white; font-family: Koulen; border: 1px solid; background-color: rgb(167, 3, 3); width: 70px; text-align: center; border-radius: 8px;"> Itinerary</a>
             </li>
             
             <a href="#"><button type="button" class="btn btn-lg btn-outline-secondary" style=" color:  rgb(167, 3, 3); width: 110px; margin-left: 10px; font-family: DM Mono;padding: px 13px; line-height: 1.5;font-size: 13px;margin-top: 2px; font-weight:bold;">LOG OUT</button></a>
@@ -36,7 +36,7 @@
 <!--STYLE-->
 <style>
 #head{
-    background-color: rgb(24,122,153);
+    background-color: rgb(255,61,0);
     color: white;
     font-family: Inter;
 }
@@ -55,7 +55,7 @@ input{
 
 <!--ETURO-->
 <div style="margin-top: 100px; margin-bottom: 50px;">
-    <h1 style="text-align: center; color: rgb(12, 90, 115); font-size: 100px; font-family: Koulen;">ETURO TRAVEL</h1>
+    <h1 style="text-align: center; color: rgb(255,61,0); font-size: 100px; font-family: Koulen;">DESTINATIONS</h1>
 </div>
 <div>
 
@@ -74,7 +74,7 @@ input{
           
           type="button"
           style="
-            background-color: rgb(14, 111, 141);
+            background-color: rgb(255,61,0);
             color: white;
             height: 50px;
             font-family: Inter;
@@ -83,7 +83,7 @@ input{
             width: 40%;
           "
         >
-        <i class="fa-solid fa-circle-plus" style="color: #f0f3f4;"></i>   <span style="margin-left: 10px;">CREATE NEW TRAVEL</span>
+        <i class="fa-solid fa-circle-plus" style="color: #f0f3f4;"></i>   <span style="margin-left: 10px;">CREATE NEW DESTINATION</span>
         </button>
       </div>
     </div>
@@ -91,57 +91,59 @@ input{
 
 
 <!--OFF CANVAS-->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="background-color: rgb(14, 111, 141);">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="background-color:rgb(255,61,0)">
     <div class="offcanvas-header">
-      <h5 id="offcanvasRightLabel"><i class="fa-solid fa-circle-plus" style="color: #f0f3f4;"></i>   <span style="margin-left: 10px; color: white;">CREATING NEW TRAVEL</span></h5>
+      <h5 id="offcanvasRightLabel"><i class="fa-solid fa-circle-plus" style="color: #f0f3f4;"></i>   <span style="margin-left: 10px; color: white;">CREATING NEW DESTINATION</span></h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
 
      <div class="offcanvas-body">
         <form>
-            <!-- 2 column grid layout with text inputs for the first and last names -->
+            
             <div class="row-2 mb-1" style="text-align: center;">
                 <div class="col-md-10 mb">
                     <div data-mdb-input-init class="form-outline" style="text-align: center; margin-top: 30px;">
-                      <label class="form-label" for="travelName" style="margin-left: 60px; color: white;">TRAVEL NAME</label>
+                      <label class="form-label" for="zipcode" style="margin-left: 60px; color: white;">ZIPCODE</label>
                       <input
                         type="text"
-                        id="travelName"
+                        id="zipcode"
                         class="form-control"
-                        name="travelName"
-                        placeholder="'1-Day Manila Trip'"
-                        style="margin-left: 30px; background-color: rgb(14, 111, 141); margin-bottom: 30px; font-family: Inter;"
+                        name="zipcode"
+                        placeholder="8400"
+                        style="margin-left: 30px; background-color: rgb(255,61,0); margin-bottom: 30px; font-family: Inter;"
                       />
                     </div>
                </div>
           </div>
+
           <div class="row-2 mb-1" style="text-align: center;">
             <div class="col-md-10 mb">
                 <div data-mdb-input-init class="form-outline" style="text-align: center; margin-top: 30px;">
-                  <label class="form-label" for="startDate" style="margin-left: 60px; color: white;">START DATE</label>
+                  <label class="form-label" for="destinationName" style="margin-left: 60px; color: white;">DESTINATION NAME</label>
                   <input
                     type="text"
-                    id="startDate"
+                    id="destinationName"
                     class="form-control"
-                    name="startDate"
-                    placeholder="'2024-09-08'"
-                    style="margin-left: 30px; background-color: rgb(14, 111, 141);"
+                    name="destinationName"
+                    placeholder="Mabua Pebble beach"
+                    style="margin-left: 30px; background-color: rgb(255,61,0); margin-bottom: 30px; font-family: Inter;"
                   />
                 </div>
            </div>
       </div>
+
       <div class="row-2 mb-1" style="text-align: center;">
         <div class="col-md-10 mb">
             <div data-mdb-input-init class="form-outline" style="text-align: center; margin-top: 30px;">
-              <label class="form-label" for="endDate" style="margin-left: 60px; color: white;">END DATE</label>
+              <label class="form-label" for="cityName" style="margin-left: 60px; color: white;">CITY/MUNICIPALITY</label>
               <input
                 type="text"
-                id="endDate"
+                id="cityName"
                 class="form-control"
-                name="endDate"
-                placeholder="'2024-09-12'"
-                style="margin-left: 30px; background-color: rgb(14, 111, 141);"
+                name="cityName"
+                placeholder="surigao city"
+                style="margin-left: 30px; background-color: rgb(255,61,0); margin-bottom: 30px; font-family: Inter;"
               />
             </div>
        </div>
@@ -150,19 +152,20 @@ input{
   <div class="row-2 mb-1" style="text-align: center;">
     <div class="col-md-10 mb">
         <div data-mdb-input-init class="form-outline" style="text-align: center; margin-top: 30px;">
-          <label class="form-label" for="Description" style="margin-left: 60px; color: white;">DESCRIPTION</label>
-          <textarea
+          <label class="form-label" for="itineraryName" style="margin-left: 60px; color: white;">REGION NAME</label>
+          <input
             type="text"
-            id="Description"
+            id="regionName"
             class="form-control"
-            name="Description"
-            rows="8"
-            style="margin-left: 30px; background-color: rgb(14, 111, 141);"
-          >
-          </textarea>
+            name="regionName"
+            placeholder="surigao del norte"
+            style="margin-left: 30px; background-color: rgb(255,61,0); margin-bottom: 30px; font-family: Inter;"
+          />
         </div>
    </div>
 </div>
+          
+      
 
 
 <!--SAVE BUTTON-->
@@ -179,7 +182,7 @@ input{
           type="button"
           style="
             background-color: rgb(255, 255, 255);
-            color: rgb(79, 155, 179);
+            color: rgb(235, 60, 7);
             height: 50px;
             font-family: Inter;
             font-weight: 500;
@@ -195,19 +198,6 @@ input{
 
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 
 
@@ -216,54 +206,45 @@ input{
 
 
 
-      <!--TABLE-->
+<!--TABLE-->
 <div style="margin-bottom: 250px;">
 <table class="table">
-    <thead>
-        <tr>
-            <th scope="col" id="head">TRAVEL ID</th>
-            <th scope="col" id="head">TRAVEL NAME</th>
-            <th scope="col" id="head">START DATE</th>
-            <th scope="col" id="head">END DATE</th>
-            <th scope="col" id="head">DAYS</th>
-            <th scope="col" id="head">DESCRIPTION</th>
-            <th scope="col" id="head"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">0001</th>
-            <td>Place holder name</td>
-            <td>place holder start date</td>
-            <td>place holder end date</td>
-            <td>place holder days</td>
-            <td>place holder description</td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">0002</th>
-            <td>Place holder name</td>
-            <td>place holder start date</td>
-            <td>place holder end date</td>
-            <td>place holder days</td>
-            <td>place holder description</td>
-            <td></td>
-          </tr>
-          <tr>
-            <th scope="row">0003</th>
-            <td>Place holder name</td>
-            <td>place holder start date</td>
-            <td>place holder end date</td>
-            <td>place holder days</td>
-            <td>place holder description</td>
-            <td></td>
-          </tr>
-    </tbody>
-  </table>
+<thead>
+  <tr>
+      <th scope="col" id="head">ZIPCODE</th>
+      <th scope="col" id="head">DESTINATION NAME</th>
+      <th scope="col" id="head">CITY/COMMUNITY</th>
+      <th scope="col" id="head">REGION NAME</th>
+      <th scope="col" id="head"></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+      <th scope="row">8419</th>
+      <td>General Luna</td>
+      <td>Siargao Island</td>
+      <td>Surigao del norte</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">8418</th>
+      <td>Municipality of Delcarmen</td>
+      <td>Siargao Island</td>
+      <td>Surigao del norte</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">8420</th>
+      <td>Soccorro</td>
+      <td>Siargao Island</td>
+      <td>Surigao del norte</td>
+      <td></td>
+    </tr>
+</tbody>
+</table>
 </div>
 <br>
 
 
 
 {%endblock%}
-

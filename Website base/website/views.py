@@ -17,3 +17,15 @@ def home():
 @views.route('/travel')
 def travel():
     return render_template("travel.html")
+
+@views.route('/itinerary')
+def itinerary():
+    return render_template("itinerary.html")
+
+@views.route('/destinations')
+def destinations():
+    return render_template("destinations.html")
+
+@views.route('/activities')
+def activities():
+    return render_template("activities.html")
