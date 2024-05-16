@@ -33,10 +33,10 @@
                     <a class="nav-link" aria-current="page" href="/" style="color: rgb(167, 3, 3); font-family: Koulen;"> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/signup" style="color: rgb(167, 3, 3); font-family: Koulen;"> Plan</a>
+                    <a class="nav-link" href="/login" style="color: rgb(167, 3, 3); font-family: Koulen;"> Plan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/signup" style="color: rgb(167, 3, 3); font-family: Koulen;"> Itinerary</a>
+                    <a class="nav-link" href="/login" style="color: rgb(167, 3, 3); font-family: Koulen;"> Itinerary</a>
                 </li>
                 
                 <a href="/login"><button type="button" class="btn btn-lg" style="background-color: rgb(167, 3, 3); color: white; width: 110px; margin-left: 10px; font-family: DM Mono;padding: px 13px; line-height: 1.5;font-size: 13px;margin-top: 2px;">LOG IN</button></a>
@@ -50,7 +50,23 @@
     {%endblock%}
 
 
-
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %} {% if category ==
+        'error' %}
+        <div class="alert alert-danger alter-dismissable fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% else %}
+        <div class="alert alert-success alter-dismissable fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endif %} {% endfor %} {% endif %} {% endwith %}
 
     <section class="container">{% block content %}  {% endblock %}</section>
 

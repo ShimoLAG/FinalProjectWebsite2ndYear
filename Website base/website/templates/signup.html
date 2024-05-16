@@ -109,7 +109,7 @@ content %}
         <div
           class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-2 pt-5 pt-xl-0 mt-xl-n5"
         >
-          <form style="width: 23rem" method="post">
+          <form style="width: 23rem" method="post" action="/signup">
             <h3
               class="fw-normal mb-3 pb-3"
               style="letter-spacing: 1px; font-family: Koulen"
@@ -151,10 +151,10 @@ content %}
               <div class="col-md-4 mb-4">
                 <div data-mdb-input-init class="form-outline">
                   <input
-                    type="text"
+                    type="number"
                     id="Birthdate"
                     class="form-control"
-                    name="year"
+                    name="Dyear"
                     placeholder="YYYY"
                   />
                 </div>
@@ -162,7 +162,7 @@ content %}
               <div class="col-md-4 mb-4">
                 <div data-mdb-input-init class="form-outline">
                   <input
-                    type="text"
+                    type="number"
                     id="Birthdate"
                     class="form-control"
                     name="month"
@@ -173,7 +173,7 @@ content %}
               <div class="col-md-4 mb-4">
                 <div data-mdb-input-init class="form-outline">
                   <input
-                    type="text"
+                    type="number"
                     id="form3Example2"
                     class="form-control"
                     name="day"
@@ -211,7 +211,7 @@ content %}
                     type="radio"
                     class="btn-check"
                     name="sex"
-                    id="option1"
+                    value="Male"
                     autocomplete="off"
                     checked
                   />
@@ -227,6 +227,7 @@ content %}
                     class="btn-check"
                     name="sex"
                     id="option2"
+                    value="Female"
                     autocomplete="off"
                   />
                   <label
@@ -260,10 +261,10 @@ content %}
             <div data-mdb-input-init class="form-outline mb-4">
               <label class="form-label" for="password1">Password</label>
               <input
-                type="password1"
+                type="password"
                 id="password1"
                 class="form-control"
-                name="password1"
+                name="password"
               />
             </div>
             <div
