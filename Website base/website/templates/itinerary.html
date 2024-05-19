@@ -197,20 +197,27 @@ input{
             <th scope="col" id="head">DAY</th>
             <th scope="col" id="head">ITINERARY NAME</th>
             <th scope="col" id="head">DESCRIPTION</th>
-            <th scope="col" id="head">TRAVEL ID</th>
+            <th scope="col" id="head">TRAVEL NAME</th>
+            <th scope="col" id="head">DESTINATIONS</th>
             <th scope="col" id="head"></th>
         </tr>
     </thead>
     <tbody>
+    {% if itineraries %}
       {% for data in itineraries %}
         <tr>
             <th scope="row">{{ data['itineraryDay'] }}</th>
             <td>{{ data['itineraryName'] }}</td>
             <td>{{ data['itineraryDescription'] }}</td>
-            <td>{{ data.travelID }}</td>
+            <td>{{ data.travelName }}</td>
+            <td><a href="{{ url_for('views.destinations', itineraryID=data.itineraryID) }}">DESTINATIONS</a></td>
             <td></td>
           </tr>
       {% endfor %}
+
+    {% else %}
+
+    {% endif %}
     </tbody>
   </table>
 </div>
