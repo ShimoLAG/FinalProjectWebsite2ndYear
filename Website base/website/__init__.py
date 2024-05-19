@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_mysqldb import MySQL
 from flask_login import LoginManager
+import MySQLdb.cursors
 from .models import users
 
 mysql = MySQL()

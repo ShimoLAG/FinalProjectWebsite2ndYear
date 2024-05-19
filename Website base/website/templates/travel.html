@@ -39,9 +39,7 @@
     background-color: rgb(24,122,153);
     color: white;
     font-family: Inter;
-}
-td{
-    font-family: Inter;
+    position: sticky;
 }
 .form-control::placeholder{
     color: rgba(255, 255, 255, 0.863);
@@ -99,7 +97,7 @@ input{
 
 
      <div class="offcanvas-body">
-        <form>
+        <form method="post" action="/travel">
             <!-- 2 column grid layout with text inputs for the first and last names -->
             <div class="row-2 mb-1" style="text-align: center;">
                 <div class="col-md-10 mb">
@@ -122,7 +120,7 @@ input{
                   <label class="form-label" for="startDate" style="margin-left: 60px; color: white;">START DATE</label>
                   <input
                     type="text"
-                    id="startDate"
+                    id="datepicker"
                     class="form-control"
                     name="startDate"
                     placeholder="'2024-09-08'"
@@ -137,7 +135,7 @@ input{
               <label class="form-label" for="endDate" style="margin-left: 60px; color: white;">END DATE</label>
               <input
                 type="text"
-                id="endDate"
+                id="datepicker"
                 class="form-control"
                 name="endDate"
                 placeholder="'2024-09-12'"
@@ -150,12 +148,12 @@ input{
   <div class="row-2 mb-1" style="text-align: center;">
     <div class="col-md-10 mb">
         <div data-mdb-input-init class="form-outline" style="text-align: center; margin-top: 30px;">
-          <label class="form-label" for="Description" style="margin-left: 60px; color: white;">DESCRIPTION</label>
+          <label class="form-label" for="travelDescription" style="margin-left: 60px; color: white;">DESCRIPTION</label>
           <textarea
             type="text"
-            id="Description"
+            id="travelDescription"
             class="form-control"
-            name="Description"
+            name="travelDescription"
             rows="8"
             style="margin-left: 30px; background-color: rgb(14, 111, 141);"
           >
@@ -176,7 +174,7 @@ input{
           data-bs-target="#offcanvasRight"
           aria-controls="offcanvasRight"
           
-          type="button"
+          type="submit"
           style="
             background-color: rgb(255, 255, 255);
             color: rgb(79, 155, 179);
@@ -192,7 +190,7 @@ input{
       </div>
     </div>
 
-
+   </form>
   </div>
 
 </div>
@@ -201,51 +199,42 @@ input{
 
 
       <!--TABLE-->
-<div style="margin-bottom: 250px;">
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col" id="head">TRAVEL ID</th>
-            <th scope="col" id="head">TRAVEL NAME</th>
-            <th scope="col" id="head">START DATE</th>
-            <th scope="col" id="head">END DATE</th>
-            <th scope="col" id="head">DAYS</th>
-            <th scope="col" id="head">DESCRIPTION</th>
-            <th scope="col" id="head"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">0001</th>
-            <td>Place holder name</td>
-            <td>place holder start date</td>
-            <td>place holder end date</td>
-            <td>place holder days</td>
-            <td>place holder description</td>
-            <td></td>
-          </tr>
+<div style="margin-bottom: 250px; overflow-x: auto;">
+  <table class="table">
+      <thead>
           <tr>
-            <th scope="row">0002</th>
-            <td>Place holder name</td>
-            <td>place holder start date</td>
-            <td>place holder end date</td>
-            <td>place holder days</td>
-            <td>place holder description</td>
-            <td></td>
+              <th scope="col" id="head"></th>
+              <th scope="col" id="head">TRAVEL NAME</th>
+              <th scope="col" id="head">START DATE</th>
+              <th scope="col" id="head">END DATE</th>
+              <th scope="col" id="head">DAYS</th>
+              <th scope="col" id="head">DESCRIPTION</th>
+              <th scope="col" id="head">Itineraries</th>
+              <th scope="col" id="head"></th>
           </tr>
+      </thead>
+      <tbody style="overflow-y: auto;">
+        {% if travel %}
+          {% for data in travel %}
           <tr>
-            <th scope="row">0003</th>
-            <td>Place holder name</td>
-            <td>place holder start date</td>
-            <td>place holder end date</td>
-            <td>place holder days</td>
-            <td>place holder description</td>
-            <td></td>
+              <td></td>
+              <td>{{ data['travelName'] }}</td>
+              <td>{{ data['startDate'] }}</td>
+              <td>{{ data['endDate'] }}</td>
+              <td>{{ data['days'] }}</td>
+              <td style="overflow-y: auto;">{{ data['travelDescription'] }}</td>
+              <td><a href="{{ url_for('views.itinerary', travelID=data.travelID) }}">Itineraries</a></td>
+              <td></td>
           </tr>
-    </tbody>
+          {% endfor %}
+
+        {% else %}
+              
+      {% endif %}
+      </tbody>
   </table>
 </div>
-<br>
+
 
 
 
