@@ -198,41 +198,80 @@ input{
 
 
 
-      <!--TABLE-->
-<div style="margin-bottom: 250px; overflow-x: auto;">
-  <table class="table">
+   <!--TABLE-->
+   <div style="margin-bottom: 250px; overflow-x: auto;">
+    <table class="table">
       <thead>
-          <tr>
-              <th scope="col" id="head"></th>
-              <th scope="col" id="head">TRAVEL NAME</th>
-              <th scope="col" id="head">START DATE</th>
-              <th scope="col" id="head">END DATE</th>
-              <th scope="col" id="head">DAYS</th>
-              <th scope="col" id="head">DESCRIPTION</th>
-              <th scope="col" id="head">ITINERARIES</th>
-              <th scope="col" id="head"></th>
-          </tr>
+        <tr>
+          <th scope="col">TRAVEL NAME</th>
+          <th scope="col">START DATE</th>
+          <th scope="col">END DATE</th>
+          <th scope="col">DAYS</th>
+          <th scope="col">DESCRIPTION</th>
+          <th scope="col">ITINERARIES</th>
+          <th scope="col"></th>
+        </tr>
       </thead>
-      <tbody style="overflow-y: auto;">
+      <tbody>
         {% if travel %}
           {% for data in travel %}
           <tr>
-              <td></td>
-              <td>{{ data['travelName'] }}</td>
-              <td>{{ data['startDate'] }}</td>
-              <td>{{ data['endDate'] }}</td>
-              <td>{{ data['days'] }}</td>
-              <td style="overflow-y: auto;">{{ data['travelDescription'] }}</td>
-              <td><a href="{{ url_for('views.itinerary', travelID=data.travelID) }}">Itineraries</a></td>
-              <td></td>
+            <td>{{ data['travelName'] }}</td>
+            <td>{{ data['startDate'] }}</td>
+            <td>{{ data['endDate'] }}</td>
+            <td>{{ data['days'] }}</td>
+            <td>{{ data['travelDescription'] }}</td>
+            <td><a href="{{ url_for('views.itinerary', travelID=data.travelID) }}">Itineraries</a></td>
+            <td>
+              <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['travelID'] }}">Edit</button>
+            </td>
           </tr>
+  
+          <!-- Modal -->
+          <div class="modal fade" id="modaledit{{ data['travelID'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Update Information</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="{{ url_for('views.travelUpdate') }}" method="POST">
+                    <input type="hidden" name="travelID" value="{{ data['travelID'] }}">
+                    <div class="mb-3">
+                      <label for="travelName" class="form-label">Name:</label>
+                      <input type="text" class="form-control" name="travelName" value="{{ data['travelName'] }}">
+                    </div>
+                    <div class="mb-3">
+                      <label for="startDate" class="form-label">Start date:</label>
+                      <input type="date" class="form-control" name="startDate" value="{{ data['startDate'] }}">
+                    </div>
+                    <div class="mb-3">
+                      <label for="endDate" class="form-label">End date:</label>
+                      <input type="date" class="form-control" name="endDate" value="{{ data['endDate'] }}">
+                    </div>
+                    <div class="mb-3">
+                      <label for="travelDescription" class="form-label">Description:</label>
+                      <input type="text" class="form-control" name="travelDescription" value="{{ data['travelDescription'] }}">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Update</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </form>
+                </div>
+                
+              </div>
+            </div>
+          </div>
           {% endfor %}
-
         {% else %}
-              
-      {% endif %}
+          <tr><td colspan="8">No travel records found.</td></tr>
+        {% endif %}
       </tbody>
-  </table>
+    </table>
+  </div>
+
 </div>
 
 

@@ -11,6 +11,9 @@ from . import mysql
 
 views = Blueprint('views', __name__) #defining a blueprint
 
+
+#ROUTES FOR POSTING DATA/INSERTING ITEMS AND UPDATING THE HTML
+
 @views.route('/', methods=['GET', 'POST'])
 def landingpage():
     return render_template("landingpage.html", user = current_user)
@@ -214,3 +217,34 @@ def activities(destinationID):
     activities = get_activities(destinationID)
     
     return render_template("activities.html", activities=activities, destinationID=destinationID)
+
+
+
+#ROUTES FOR UPDATING THE DATA
+
+@views.route('/travelUpdate', methods=['POST'])
+@login_required
+def travelUpdate():
+    if request.method == 'POST':
+        travelID = request.form['travelID']
+        travelName = request.form['travelName']
+        startDate = request.form['startDate']
+        endDate = request.form['endDate']
+        travelDescription = request.form['travelDescription']
+
+        # Calculate the number of days
+        days = (datetime.strptime(endDate, '%Y-%m-%d') - datetime.strptime(startDate, '%Y-%m-%d')).days
+        
+        cur = mysql.connection.cursor()
+        cur.execute('''
+                    UPDATE travel
+                    SET travelName = %s, startDate = %s, endDate = %s, days = %s, travelDescription = %s
+                    WHERE travelID = %s
+                    ''', (travelName, startDate, endDate, days, travelDescription, travelID))
+        mysql.connection.commit()
+        cur.close()
+
+        flash("Data updated successfully", category="success")
+        return redirect(url_for('views.travel'))
+
+
