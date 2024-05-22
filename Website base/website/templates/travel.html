@@ -15,7 +15,7 @@
                 <a class="nav-link" aria-current="page" href="/home" style="color: white; font-family: Koulen; border: 1px solid; background-color: rgb(167, 3, 3); width: 70px; text-align: center; border-radius: 8px;"></i> Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/signup" style="color: rgb(167, 3, 3); font-family: Koulen;"> Plan</a>
+                <a class="nav-link" href="/travel" style="color: rgb(167, 3, 3); font-family: Koulen;"> Plan</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/itinerary" style="color: rgb(167, 3, 3); font-family: Koulen;"> Itinerary</a>
@@ -203,13 +203,13 @@ input{
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">TRAVEL NAME</th>
-          <th scope="col">START DATE</th>
-          <th scope="col">END DATE</th>
-          <th scope="col">DAYS</th>
-          <th scope="col">DESCRIPTION</th>
-          <th scope="col">ITINERARIES</th>
-          <th scope="col"></th>
+          <th scope="col" id="head">TRAVEL NAME</th>
+          <th scope="col" id="head">START DATE</th>
+          <th scope="col" id="head">END DATE</th>
+          <th scope="col" id="head">DAYS</th>
+          <th scope="col" id="head">DESCRIPTION</th>
+          <th scope="col" id="head">ITINERARIES</th>
+          <th scope="col" id="head"></th>
         </tr>
       </thead>
       <tbody>
@@ -221,7 +221,7 @@ input{
             <td>{{ data['endDate'] }}</td>
             <td>{{ data['days'] }}</td>
             <td>{{ data['travelDescription'] }}</td>
-            <td><a href="{{ url_for('views.itinerary', travelID=data.travelID) }}">Itineraries</a></td>
+            <td><a href="{{ url_for('views.itinerary', travelID=data.travelID) }}">ITINERARIES</a></td>
             <td>
               <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['travelID'] }}">Edit</button>
             </td>
@@ -236,6 +236,7 @@ input{
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                  
                   <form action="{{ url_for('views.travelUpdate') }}" method="POST">
                     <input type="hidden" name="travelID" value="{{ data['travelID'] }}">
                     <div class="mb-3">

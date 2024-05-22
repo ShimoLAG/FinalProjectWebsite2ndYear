@@ -211,50 +211,12 @@ input{
             <td>{{ data['itineraryDescription'] }}</td>
             <td>{{ data.travelName }}</td>
             <td><a href="{{ url_for('views.destinations', itineraryID=data.itineraryID) }}">DESTINATIONS</a></td>
-            <td>
-                <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['itineraryID'] }}">Edit</button>
-            </td>
+            <td></td>
           </tr>
-
-           <!-- Modal -->
-           <div class="modal fade" id="modaledit{{ data['itineraryID'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Update Information</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  
-                  <form action="{{ url_for('views.itineraryUpdate') }}" method="POST">
-                    <input type="hidden" name="itineraryID" value="{{ data['itineraryID'] }}">
-                    <input type="hidden" name="travelID" value="{{ data['travelID'] }}">
-                    <div class="mb-3">
-                        <label for="days" class="form-label">Day:</label>
-                        <input type="number" class="form-control" name="itineraryDay" value="{{ data['itineraryDay'] }}">
-                      </div>
-                    <div class="mb-3">
-                      <label for="travelName" class="form-label">Name:</label>
-                      <input type="text" class="form-control" name="itineraryName" value="{{ data['itineraryName'] }}">
-                    </div>
-                    <div class="mb-3">
-                      <label for="itienraryDescription" class="form-label">Description:</label>
-                      <input type="text" class="form-control" name="itineraryDescription" value="{{ data['itineraryDescription'] }}">
-                    </div>
-                    <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary">Update</button>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                  </form>
-                </div>
-                
-              </div>
-            </div>
-          </div>
       {% endfor %}
 
     {% else %}
-    <tr><td colspan="8">No travel records found.</td></tr>
+
     {% endif %}
     </tbody>
   </table>

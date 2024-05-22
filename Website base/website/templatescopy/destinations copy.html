@@ -220,7 +220,6 @@ input{
   </tr>
 </thead>
 <tbody>
-  {% if destinations %}
   {% for data in destinations %}
         <tr>
             <th scope="row">{{ data['zipcode'] }}</th>
@@ -228,57 +227,11 @@ input{
             <td>{{ data['cityName'] }}</td>
             <td>{{ data['regionName'] }}</td>
             <td><a href="{{ url_for('views.activities', destinationID=data.destinationID) }}">ACTIVITIES</a></td>
-            <td>
-              <button type="button" class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['destinationID'] }}">Edit</button>
-            </td>
+            <td></td>
           </tr>
-
-          <!-- Modal for editing destination -->
-          <div class="modal fade" id="modaledit{{ data['destinationID'] }}" tabindex="-1" aria-labelledby="modalLabel{{ data['destinationID'] }}" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel{{ data['destinationID'] }}">Update Information</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ url_for('views.destinationsUpdate') }}" method="POST">
-                            <!-- Hidden inputs to pass IDs -->
-                            <input type="hidden" name="destinationID" value="{{ data['destinationID'] }}">
-                            <input type="hidden" name="itineraryID" value="{{ data['itineraryID'] }}">
-                            <!-- Form fields for updating destination information -->
-                            <div class="mb-3">
-                                <label for="zipcode{{ data['destinationID'] }}" class="form-label">Zipcode:</label>
-                                <input type="text" class="form-control" id="zipcode{{ data['destinationID'] }}" name="zipcode" value="{{ data['zipcode'] }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="destinationName{{ data['destinationID'] }}" class="form-label">Name:</label>
-                                <input type="text" class="form-control" id="destinationName{{ data['destinationID'] }}" name="destinationName" value="{{ data['destinationName'] }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="cityName{{ data['destinationID'] }}" class="form-label">City/Municipality:</label>
-                                <input type="text" class="form-control" id="cityName{{ data['destinationID'] }}" name="cityName" value="{{ data['cityName'] }}">
-                            </div>
-                            <div class="mb-3">
-                              <label for="regionName{{ data['destinationID'] }}" class="form-label">Region:</label>
-                              <input type="text" class="form-control" id="regionName{{ data['destinationID'] }}" name="regionName" value="{{ data['regionName'] }}">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-  {% endfor %}
-{% else %}
-  <tr><td colspan="6">No destinations records found.</td></tr>
-{% endif %}
+      {% endfor %}
 </tbody>
 </table>
-
 </div>
 <br>
 

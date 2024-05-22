@@ -29,7 +29,7 @@ def login():
             login_user(user, remember=True)
             return redirect(url_for('views.home'))
         else:
-            flash('incorrect username/password', category='error')
+            flash('incorrect Password/Username Or No account yet', category='error')
 
     return render_template('login.html', users=current_user)
 

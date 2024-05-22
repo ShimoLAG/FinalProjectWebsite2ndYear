@@ -245,7 +245,7 @@ input{
             <th scope="col" id="head">ACTIVITY NAME</th>
             <th scope="col" id="head">ADDRESS</th>
             <th scope="col" id="head">DESCRIPTION</th>
-            <th scope="col" id="head">ACTIVITY ID</th>
+            <th scope="col" id="head">TRAVELS</th>
             <th scope="col" id="head"></th>
         </tr>
     </thead>
@@ -258,12 +258,52 @@ input{
             <td>{{ data['activityName'] }}</td>
             <td>{{ data['address'] }}</td>
             <td>{{ data['activityDescription'] }}</td>
-            <td>{{ data['activitySequence'] }}</td>
-            <td></td>
+            <td><a href="{{ url_for('views.travel')}}">TRAVEL</a></td>
+            <td><button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['activityID'] }}">Edit</button></td>
           </tr>
+          <!--MODAL-->
+          <div class="modal fade" id="modaledit{{ data['activityID'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Update Information</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  
+                  <form action="{{ url_for('views.activityUpdate') }}" method="POST">
+                    <input type="hidden" name="destinationID" value="{{ data['destinationID'] }}">
+                    <input type="hidden" name="activityID" value="{{ data['activityID'] }}">
+                    <div class="mb-3">
+                      <label for="activityName" class="form-label">Name:</label>
+                      <input type="text" class="form-control" name="activityName" value="{{ data['activityName'] }}">
+                    </div>
+                    <div class="mb-3">
+                      <label for="timeFrom" class="form-label">Start time:</label>
+                      <input type="time" class="form-control" name="timeFrom" value="{{ data['timeFrom'] }}">
+                    </div>
+                    <div class="mb-3">
+                      <label for="timeTo" class="form-label">End time</label>
+                      <input type="time" class="form-control" name="timeTo" value="{{ data['timeTo'] }}">
+                    </div>
+                    <div class="mb-3">
+                      <label for="activityDescription" class="form-label">Description:</label>
+                      <input type="text" class="form-control" name="activityDescription" value="{{ data['activityDescription'] }}">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Update</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </form>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
         {% endfor %}
       {% else %}
-        <!-- Placeholder for no activities -->
+      <tr><td colspan="8">No destinations records found.</td></tr>
       {% endif %}
     </tbody>
     

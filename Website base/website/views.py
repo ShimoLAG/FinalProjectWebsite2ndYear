@@ -95,12 +95,17 @@ def itinerary(travelID):
         return data
 
     if request.method == 'POST':
-        itineraryDay = request.form['itineraryDay']
-        itineraryDescription = request.form['itineraryDescription']
-        itineraryName = request.form['itineraryName']
+        itineraryDay = request.form.get('itineraryDay')
+        itineraryDescription = request.form.get('itineraryDescription')
+        itineraryName = request.form.get('itineraryName')
+        
         
         cursor = mysql.connection.cursor()
-        cursor.execute("INSERT INTO itineraries (itineraryDay, itineraryName, itineraryDescription, travelID) VALUES (%s, %s, %s, %s)", (itineraryDay, itineraryName, itineraryDescription, travelID))
+        print(itineraryDay)
+        cursor.execute(
+            "INSERT INTO itineraries (itineraryDay, itineraryName, itineraryDescription, travelID) VALUES ( %s, %s, %s, %s)", 
+            (itineraryDay, itineraryName, itineraryDescription, travelID)
+        )
         mysql.connection.commit()
         cursor.close()
         
@@ -110,12 +115,13 @@ def itinerary(travelID):
     # Fetch itinerary data for the given travelID and render the template
     accountID = get_account_id()
     if accountID is None:
-        flash("Not logged in", category='error')
+        flash("You are not logged in.", category='error')
         return redirect(url_for('auth.login'))  # Redirect to login page
     
     itineraries_and_travel = get_itineraries_and_travel_name(travelID)
     
     return render_template('itinerary.html', itineraries=itineraries_and_travel, travelID=travelID)
+
 
 
 
@@ -140,6 +146,8 @@ def destinations(itineraryID):  # Ensure itineraryID is passed as a parameter
         destinationName = request.form['destinationName']
         cityName = request.form['cityName']
         regionName = request.form['regionName']
+
+        print(f'Form Data: zipcode={zipcode}, destinationName={destinationName}, cityName={cityName}, regionName={regionName}, itineraryID={itineraryID}')
         
         cursor = mysql.connection.cursor()
         cursor.execute("INSERT INTO destinations (zipcode, destinationName, cityName, regionName, itineraryID) VALUES (%s, %s, %s, %s, %s)", (zipcode, destinationName, cityName, regionName, itineraryID))
@@ -180,7 +188,7 @@ def activities(destinationID):
         Function to fetch activities associated with the given destinationID from the database.
         """
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT activityID, activityName, activityDescription, timeFrom, timeTo, address, activitySequence, destinationID FROM activities WHERE destinationID = %s', (destinationID,))
+        cursor.execute('SELECT activityID, activityName, activityDescription, timeFrom, timeTo, address, destinationID FROM activities WHERE destinationID = %s', (destinationID,))
         activities = cursor.fetchall()
         cursor.close()
         return activities
@@ -195,13 +203,9 @@ def activities(destinationID):
         address = request.form['address']
         activityDescription= request.form['activityDescription']
 
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT IFNULL(MAX(activitySequence), 0) + 1 FROM activities WHERE destinationID = %s", (destinationID,))
-        activitySequence = cursor.fetchone()[0]
-
         
         cursor = mysql.connection.cursor()
-        cursor.execute("INSERT INTO activities (activityName, timeFrom, timeTo, address, activityDescription, destinationID, activitySequence) VALUES (%s, %s, %s, %s, %s, %s, %s)", (activityName, timeFrom, timeTo, address, activityDescription, destinationID, activitySequence))
+        cursor.execute("INSERT INTO activities (activityName, timeFrom, timeTo, address, activityDescription, destinationID) VALUES (%s, %s, %s, %s, %s, %s)", (activityName, timeFrom, timeTo, address, activityDescription, destinationID))
         mysql.connection.commit()
         cursor.close()
         
@@ -246,5 +250,101 @@ def travelUpdate():
 
         flash("Data updated successfully", category="success")
         return redirect(url_for('views.travel'))
+    
+
+@views.route('/itineraryUpdate', methods=['POST'])
+@login_required
+def itineraryUpdate():
+    print("Route accessed")  # Debug: Check if route is accessed
+
+    if request.method == 'POST':
+        itineraryID = request.form['itineraryID']
+        travelID = request.form['travelID']  # Added travelID to use in redirection
+        itineraryDay = request.form['itineraryDay']
+        itineraryDescription = request.form['itineraryDescription']
+        itineraryName = request.form['itineraryName']
+
+
+        try:
+            # Update itinerary in the database
+            cur = mysql.connection.cursor()
+            cur.execute('''
+                        UPDATE itineraries
+                        SET itineraryDay = %s, itineraryName = %s, itineraryDescription = %s
+                        WHERE itineraryID = %s
+                        ''', ( itineraryDay, itineraryName,  itineraryDescription, itineraryID))
+            mysql.connection.commit()
+            cur.close()
+
+            flash("Data updated successfully", category="success")
+        except Exception as e:
+            mysql.connection.rollback()
+            flash(f"An error occurred: {e}", category="error")
+        finally:
+            return redirect(url_for('views.itinerary', travelID=travelID))
+    
+
+@views.route('/destinationsUpdate', methods=['POST'])
+@login_required
+def destinationsUpdate():
+    if request.method == 'POST':
+        itineraryID = request.form.get('itineraryID')
+        destinationID = request.form['destinationID']  # Added to fetch destinationID
+        zipcode = request.form['zipcode']
+        destinationName = request.form['destinationName']
+        cityName = request.form['cityName']
+        regionName = request.form['regionName']
+
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute('''
+                        UPDATE destinations
+                        SET zipcode = %s, destinationName = %s, cityName = %s, regionName = %s
+                        WHERE destinationID = %s
+                        ''', (zipcode, destinationName, cityName, regionName, destinationID))
+            mysql.connection.commit()
+            cur.close()
+
+            flash("Data updated successfully", category="success")
+        except Exception as e:
+            mysql.connection.rollback()
+            flash(f"An error occurred: {e}", category="error")
+        finally:
+           return redirect(url_for('views.destinations', itineraryID=itineraryID))
+        
+@views.route('/activityUpdate', methods=['POST'])
+@login_required
+def activityUpdate():
+    if request.method == 'POST':
+        destinationID = request.form.get('destinationID')
+        activityID = request.form.get('activityID')  # Added to fetch destinationID
+        activityName = request.form['activityName']
+        timeFrom = request.form['timeFrom']
+        timeTo = request.form['timeTo']
+        activityDescription = request.form['activityDescription']
+
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute('''
+                        UPDATE activities
+                        SET activityName = %s, timeFrom = %s, timeTo = %s, activityDescription = %s
+                        WHERE activityID = %s
+                        ''', (activityName, timeFrom, timeTo, activityDescription, activityID))
+            mysql.connection.commit()
+            cur.close()
+
+            flash("Data updated successfully", category="success")
+        except Exception as e:
+            mysql.connection.rollback()
+            flash(f"An error occurred: {e}", category="error")
+        finally:
+           return redirect(url_for('views.activities', destinationID=destinationID))
+        
+
+
+
+
+
+
 
 
