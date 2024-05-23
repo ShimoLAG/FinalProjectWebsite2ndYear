@@ -191,56 +191,42 @@ content %}
 
             <!-- Gender -->
             <style>
-              .custom-btn {
+              .btn-check:checked + .custom-btn {
+                background-color: #5b752f;
                 color: white;
-                background-color: rgba(91, 117, 47, 1);
               }
-              
+            
+              .btn-check:not(:checked) + .custom-btn {
+                background-color: white;
+                color: black;
+              }
             </style>
-
+            
+            
             <div class="row mt-n3">
-              <label
-                class="form-label col-auto"
-                for="Gender"
-                style="margin-right: 10px"
-                >Sex</label
-              >
+              <label class="form-label col-auto" for="Gender" style="margin-right: 10px">Sex</label>
               <div class="col-auto">
                 <div class="btn-group" style="margin-top: -5px">
-                  <input
-                    type="radio"
-                    class="btn-check"
-                    name="sex"
-                    value="Male"
-                    autocomplete="off"
-                    checked
-                  />
-                  <label
-                    class="btn custom-btn"
-                    for="option1"
-                    data-mdb-ripple-init
-                    style="width: 184px"
-                    >Male</label
-                  >
-                  <input
-                    type="radio"
-                    class="btn-check"
-                    name="sex"
-                    id="option2"
-                    value="Female"
-                    autocomplete="off"
-                  />
-                  <label
-                    class="btn custom-btn"
-                    for="option2"
-                    data-mdb-ripple-init
-                    style="width: 184px"
-                    >Female</label
-                  >
+                  <input type="radio" class="btn-check" name="sex" value="Male" autocomplete="off" checked id="option1" />
+                  <label class="btn custom-btn" for="option1" data-mdb-ripple-init style="width: 184px">Male</label>
+                  <input type="radio" class="btn-check" name="sex" value="Female" autocomplete="off" id="option2" />
+                  <label class="btn custom-btn" for="option2" data-mdb-ripple-init style="width: 184px">Female</label>
                 </div>
               </div>
             </div>
-
+            
+            <script>
+              const labels = document.querySelectorAll('.custom-btn');
+            
+              labels.forEach((label) => {
+                label.addEventListener('click', () => {
+                  labels.forEach((lbl) => {
+                    lbl.classList.remove('active');
+                  });
+                  label.classList.add('active');
+                });
+              });
+            </script>
             <!-- Email input -->
             <div
               data-mdb-input-init
