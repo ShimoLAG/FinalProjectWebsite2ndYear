@@ -248,7 +248,10 @@ input{
             <td>{{ data['address'] }}</td>
             <td>{{ data['activityDescription'] }}</td>
             <td><a href="{{ url_for('views.travel')}}">TRAVEL</a></td>
-            <td><button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['activityID'] }}">Edit</button></td>
+            <td>
+                <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['activityID'] }}">Edit</button>
+                <a href="/activitiesDelete/{{ data.activityID }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
+            </td>
           </tr>
           <!--MODAL-->
           <div class="modal fade" id="modaledit{{ data['activityID'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
