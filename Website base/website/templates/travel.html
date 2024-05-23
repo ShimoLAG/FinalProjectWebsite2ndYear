@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Travel {% endblock %}
+{% block title %} TRAVEL {% endblock %}
 
 {% block head %}
 <div>
@@ -35,7 +35,7 @@
                         <a class="nav-link" href="/travel" style="color: rgb(167, 3, 3); font-family: Koulen;"> Plan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/itinerary" style="color: rgb(167, 3, 3); font-family: Koulen;"> Itinerary</a>
+                        <a class="nav-link" href="/travel" style="color: rgb(167, 3, 3); font-family: Koulen;"> Itinerary</a>
                     </li>
                     <a href="/logout">
                         <button type="button" class="btn btn-lg btn-outline-secondary" style=" color: rgb(167, 3, 3); width: 110px; margin-left: 10px; font-family: DM Mono;padding: px 13px; line-height: 1.5;font-size: 13px;margin-top: 2px; font-weight:bold;">LOG OUT</button>
@@ -244,7 +244,7 @@ input{
             <td><a href="{{ url_for('views.itinerary', travelID=data.travelID) }}">ITINERARIES</a></td>
             <td>
               <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['travelID'] }}"><i class="fa-solid fa-gear"></i></button>
-              <a href="/travelDelete/{{ data.travelID }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')"><i class="fa-solid fa-trash"></a>
+              <a href="/travelDelete/{{ data.travelID }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')"><i class="fa-solid fa-trash"></i></a>
             </td>
           </tr>
   

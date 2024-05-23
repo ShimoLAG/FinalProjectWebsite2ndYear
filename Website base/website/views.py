@@ -199,7 +199,7 @@ def travelUpdate():
 @views.route('/itineraryUpdate', methods=['POST'])
 @login_required
 def itineraryUpdate():
-    print("Route accessed")  # Debug: Check if route is accessed
+    
 
     if request.method == 'POST':
         itineraryID = request.form['itineraryID']
@@ -378,9 +378,63 @@ def travelSearch():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM travel WHERE travelName LIKE %s AND accountID = %s", ('%' + travelName + '%', accountID))
     data = cursor.fetchall()
+
     cursor.close()
     
     return render_template('travel.html', travel=data)
+
+@views.route('/itinerarySearch/<int:travelID>', methods=['POST'])
+@login_required
+def itinerarySearch(travelID):
+    itinerary_name = request.form['itineraryName']
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    query = "SELECT i.*, t.travelName FROM itineraries i JOIN travel t ON i.travelID = t.travelID WHERE i.itineraryName LIKE %s AND i.travelID = %s"
+
+    cursor.execute(query, ('%' + itinerary_name + '%', travelID))
+    data = cursor.fetchall()
+    
+
+    cursor.close()
+    
+    return render_template('itinerary.html', itineraries=data, travelID=travelID)
+
+@views.route('/destinationsSearch/<int:itineraryID>', methods=['POST'])
+@login_required
+def destinationsSearch(itineraryID):
+    destinationName = request.form['destinationName']
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    query = "SELECT d.*, i.itineraryName FROM destinations d JOIN itineraries i ON d.itineraryID = i.itineraryID WHERE d.destinationName LIKE %s AND d.itineraryID = %s"
+
+    cursor.execute(query, ('%' + destinationName + '%', itineraryID))
+    data = cursor.fetchall()
+    
+
+    cursor.close()
+    
+    return render_template('destinations.html', destinations=data, itineraryID=itineraryID)
+
+@views.route('/activitiesSearch/<int:destinationID>', methods=['POST'])
+@login_required
+def activitiesSearch(destinationID):
+    activityName = request.form['activityName']
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    query = "SELECT a.*, d.destinationName FROM activities a JOIN destinations d ON a.destinationID = d.destinationID WHERE a.activityName LIKE %s AND a.destinationID = %s"
+
+    cursor.execute(query, ('%' + activityName + '%', destinationID))
+    data = cursor.fetchall()
+    
+
+    cursor.close()
+    
+    return render_template('activities.html', activities=data, destinationID=destinationID)
+
+
+
+
+
 
 
 

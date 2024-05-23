@@ -1,35 +1,53 @@
-{% extends "base.html" %} {% block title %} Activities {% endblock %}
+{% extends "base.html" %}
+{% block title %} ACTIVITIES {% endblock %}
 
 {% block head %}
-
 <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-        <a class="navbar-brand" href="/home" style="color: rgb(167, 3, 3); font-family: Koulen;" > <i class="fa-regular fa-calendar-days"> </i> ETURO</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: span; margin-left: 75%;">
-            <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/home" style="color: white; font-family: Koulen; border: 1px solid; background-color: rgb(167, 3, 3); width: 70px; text-align: center; border-radius: 8px;"></i> Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/travel" style="color: rgb(167, 3, 3); font-family: Koulen;"> Plan</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/travel" style="color: rgb(167, 3, 3); font-family: Koulen;"> Itinerary</a>
-            </li>
-            
-            <a href="/logout"><button type="button" class="btn btn-lg btn-outline-secondary" style=" color:  rgb(167, 3, 3); width: 110px; margin-left: 10px; font-family: DM Mono;padding: px 13px; line-height: 1.5;font-size: 13px;margin-top: 2px; font-weight:bold;">LOG OUT</button></a>
-            
-            
-            </ul>
-        </div>
+            <a class="navbar-brand" href="/home" style="color: rgb(167, 3, 3); font-family: Koulen;">
+                <i class="fa-regular fa-calendar-days"> </i> ETURO
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: span; margin-left: 75%;">
+                  <form method="post" action="/activitiesSearch/{{ destinationID }}" style="display: flex; align-items: center; margin-left: -150px;">
+                    <li class="nav-item" style="list-style: none;">
+                        <input type="text" class="form-control" name="activityName" placeholder="Search activities" />
+                    </li>
+                    <li style="list-style: none;">
+                        <button type="submit" class="btn btn-sm btn-default" name="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </li>
+                    <li style="list-style: none;">
+                        <a href="{{ url_for('views.activities', destinationID=destinationID) }}" class="btn btn-sm btn-default">
+                            <i class="fa-solid fa-x"></i>
+                        </a>
+                    </li>
+                </form>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/home" style="color: white; font-family: Koulen; border: 1px solid; background-color: rgb(167, 3, 3); width: 70px; text-align: center; border-radius: 8px; margin-left: 30px;">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/travel" style="color: rgb(167, 3, 3); font-family: Koulen;"> Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/travel" style="color: rgb(167, 3, 3); font-family: Koulen;"> Itinerary</a>
+                    </li>
+                    <a href="/logout">
+                        <button type="button" class="btn btn-lg btn-outline-secondary" style=" color: rgb(167, 3, 3); width: 110px; margin-left: 10px; font-family: DM Mono;padding: px 13px; line-height: 1.5;font-size: 13px;margin-top: 2px; font-weight:bold;">LOG OUT</button>
+                    </a>
+                </ul>
+            </div>
         </div>
     </nav>
 </div>
-{%endblock%}
+{% endblock %}
 
 {% block content %}
 
@@ -249,8 +267,8 @@ input{
             <td>{{ data['activityDescription'] }}</td>
             <td><a href="{{ url_for('views.travel')}}">TRAVEL</a></td>
             <td>
-                <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['activityID'] }}">Edit</button>
-                <a href="/activitiesDelete/{{ data.activityID }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
+                <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['activityID'] }}"><i class="fa-solid fa-gear"></i></button>
+                <a href="/activitiesDelete/{{ data.activityID }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')"><i class="fa-solid fa-trash"></i></a>
             </td>
           </tr>
           <!--MODAL-->

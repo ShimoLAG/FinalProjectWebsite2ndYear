@@ -1,35 +1,54 @@
-{% extends "base.html" %} {% block title%} Itinerary {%endblock%}
+{% extends "base.html" %}
+{% block title %} ITINERARIES {% endblock %}
 
 {% block head %}
-
 <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-        <a class="navbar-brand" href="/home" style="color: rgb(167, 3, 3); font-family: Koulen;" > <i class="fa-regular fa-calendar-days"> </i> ETURO</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: span; margin-left: 75%;">
-            <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/home" style="color: rgb(167, 3, 3); font-family: Koulen;"></i> Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/signup" style="color: rgb(167, 3, 3); font-family: Koulen;"> Plan</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/itinerary" style="color: white; font-family: Koulen; border: 1px solid; background-color: rgb(167, 3, 3); width: 70px; text-align: center; border-radius: 8px;"> Itinerary</a>
-            </li>
-            
-            <a href="#"><button type="button" class="btn btn-lg btn-outline-secondary" style=" color:  rgb(167, 3, 3); width: 110px; margin-left: 10px; font-family: DM Mono;padding: px 13px; line-height: 1.5;font-size: 13px;margin-top: 2px; font-weight:bold;">LOG OUT</button></a>
-            
-            
-            </ul>
-        </div>
+            <a class="navbar-brand" href="/home" style="color: rgb(167, 3, 3); font-family: Koulen;">
+                <i class="fa-regular fa-calendar-days"> </i> ETURO
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: span; margin-left: 75%;">
+                  <form method="post" action="/itinerarySearch/{{ travelID }}" style="display: flex; align-items: center; margin-left: -150px;">
+                    <li class="nav-item" style="list-style: none;">
+                        <input type="text" class="form-control" name="itineraryName" placeholder="Search Travel" />
+                    </li>
+                    <li style="list-style: none;">
+                        <button type="submit" class="btn btn-sm btn-default" name="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </li>
+                    <li style="list-style: none;">
+                        <a href="{{ url_for('views.itinerary', travelID=travelID) }}" class="btn btn-sm btn-default">
+                            <i class="fa-solid fa-x"></i>
+                        </a>
+                    </li>
+                </form>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/home" style="color: white; font-family: Koulen; border: 1px solid; background-color: rgb(167, 3, 3); width: 70px; text-align: center; border-radius: 8px; margin-left: 30px;">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/travel" style="color: rgb(167, 3, 3); font-family: Koulen;"> Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/travel" style="color: rgb(167, 3, 3); font-family: Koulen;"> Itinerary</a>
+                    </li>
+                    <a href="/logout">
+                        <button type="button" class="btn btn-lg btn-outline-secondary" style=" color: rgb(167, 3, 3); width: 110px; margin-left: 10px; font-family: DM Mono;padding: px 13px; line-height: 1.5;font-size: 13px;margin-top: 2px; font-weight:bold;">LOG OUT</button>
+                    </a>
+                </ul>
+            </div>
         </div>
     </nav>
 </div>
-{%endblock%}
+{% endblock %}
+
 
 {% block content %}
 
@@ -189,75 +208,71 @@ input{
 
 
 
-      <!--TABLE-->
+<!--TABLE-->
 <div style="margin-bottom: 250px;">
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col" style="background: linear-gradient(to right, #800f0f, #8a0e0e); color: white;">DAY</th>
-            <th scope="col" style="background: linear-gradient(to right, #8a0e0e, #a40d0d); color: white;">ITINERARY NAME</th>
-            <th scope="col" style="background: linear-gradient(to right, #a40d0d, #e24040); color: white;">DESCRIPTION</th>
-            <th scope="col" style="background: linear-gradient(to right, #e24040, #eb6060); color: white;">TRAVEL NAME</th>
-            <th scope="col" style="background: linear-gradient(to right, #eb6060, #f08787); color: white;">DESTINATIONS</th>
-            <th scope="col" style="background: linear-gradient(to right, #f08787, #ff9d9d); color: white;"></th>
-        </tr>
-    </thead>
-    <tbody>
-    {% if itineraries %}
-      {% for data in itineraries %}
-        <tr>
-            <th scope="row">{{ data['itineraryDay'] }}</th>
-            <td>{{ data['itineraryName'] }}</td>
-            <td>{{ data['itineraryDescription'] }}</td>
-            <td>{{ data.travelName }}</td>
-            <td><a href="{{ url_for('views.destinations', itineraryID=data.itineraryID) }}">DESTINATIONS</a></td>
-            <td>
-                <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['itineraryID'] }}">Edit</button>
-                <a href="/itineraryDelete/{{ data.itineraryID }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
-            </td>
+  <table class="table">
+      <thead>
+          <tr>
+              <th scope="col" style="background: linear-gradient(to right, #800f0f, #8a0e0e); color: white;">DAY</th>
+              <th scope="col" style="background: linear-gradient(to right, #8a0e0e, #a40d0d); color: white;">ITINERARY NAME</th>
+              <th scope="col" style="background: linear-gradient(to right, #a40d0d, #e24040); color: white;">DESCRIPTION</th>
+              <th scope="col" style="background: linear-gradient(to right, #e24040, #eb6060); color: white;">TRAVEL NAME</th>
+              <th scope="col" style="background: linear-gradient(to right, #eb6060, #f08787); color: white;">DESTINATIONS</th>
+              <th scope="col" style="background: linear-gradient(to right, #f08787, #ff9d9d); color: white;"></th>
           </tr>
-
-           <!-- Modal -->
-           <div class="modal fade" id="modaledit{{ data['itineraryID'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Update Information</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  
-                  <form action="{{ url_for('views.itineraryUpdate') }}" method="POST">
-                    <input type="hidden" name="itineraryID" value="{{ data['itineraryID'] }}">
-                    <input type="hidden" name="travelID" value="{{ data['travelID'] }}">
-                    <div class="mb-3">
-                        <label for="days" class="form-label">Day:</label>
-                        <input type="number" class="form-control" name="itineraryDay" value="{{ data['itineraryDay'] }}">
+      </thead>
+      <tbody>
+          {% if itineraries %}
+              {% for data in itineraries %}
+                  <tr>
+                      <th scope="row">{{ data['itineraryDay'] }}</th>
+                      <td>{{ data['itineraryName'] }}</td>
+                      <td>{{ data['itineraryDescription'] }}</td>
+                      <td>{{ data['travelName'] }}</td>
+                      <td><a href="{{ url_for('views.destinations', itineraryID=data.itineraryID) }}">DESTINATIONS</a></td>
+                      <td>
+                          <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['itineraryID'] }}"><i class="fa-solid fa-gear"></i></button>
+                          <a href="/itineraryDelete/{{ data.itineraryID }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')"><i class="fa-solid fa-trash"></i></a>
+                      </td>
+                  </tr>
+                  <!-- Modal -->
+                  <div class="modal fade" id="modaledit{{ data['itineraryID'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Update Information</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form action="{{ url_for('views.itineraryUpdate') }}" method="POST">
+                                      <input type="hidden" name="itineraryID" value="{{ data['itineraryID'] }}">
+                                      <input type="hidden" name="travelID" value="{{ data['travelID'] }}">
+                                      <div class="mb-3">
+                                          <label for="days" class="form-label">Day:</label>
+                                          <input type="number" class="form-control" name="itineraryDay" value="{{ data['itineraryDay'] }}">
+                                      </div>
+                                      <div class="mb-3">
+                                          <label for="travelName" class="form-label">Name:</label>
+                                          <input type="text" class="form-control" name="itineraryName" value="{{ data['itineraryName'] }}">
+                                      </div>
+                                      <div class="mb-3">
+                                          <label for="itienraryDescription" class="form-label">Description:</label>
+                                          <input type="text" class="form-control" name="itineraryDescription" value="{{ data['itineraryDescription'] }}">
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="submit" class="btn btn-primary">Update</button>
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      </div>
+                                  </form>
+                              </div>
+                          </div>
                       </div>
-                    <div class="mb-3">
-                      <label for="travelName" class="form-label">Name:</label>
-                      <input type="text" class="form-control" name="itineraryName" value="{{ data['itineraryName'] }}">
-                    </div>
-                    <div class="mb-3">
-                      <label for="itienraryDescription" class="form-label">Description:</label>
-                      <input type="text" class="form-control" name="itineraryDescription" value="{{ data['itineraryDescription'] }}">
-                    </div>
-                    <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary">Update</button>
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                  </form>
-                </div>
-                
-              </div>
-            </div>
-          </div>
-      {% endfor %}
-
-    {% else %}
-    <tr><td colspan="8">No travel records found.</td></tr>
-    {% endif %}
-    </tbody>
+                  </div>
+              {% endfor %}
+          {% else %}
+              <tr><td colspan="6">No itinerary records found.</td></tr>
+          {% endif %}
+      </tbody>
   </table>
 </div>
 <br>
