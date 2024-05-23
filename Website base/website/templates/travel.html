@@ -180,7 +180,7 @@ input{
           type="submit"
           style="
             background-color: rgb(255, 255, 255);
-            color: rgb(79, 155, 179);
+            color: #0e6f8d;
             height: 50px;
             font-family: Inter;
             font-weight: 500;
@@ -205,15 +205,16 @@ input{
    <div style="margin-bottom: 250px; overflow-x: auto;">
     <table class="table">
       <thead>
-        <tr>
-          <th scope="col" id="head">TRAVEL NAME</th>
-          <th scope="col" id="head">START DATE</th>
-          <th scope="col" id="head">END DATE</th>
-          <th scope="col" id="head">DAYS</th>
-          <th scope="col" id="head">DESCRIPTION</th>
-          <th scope="col" id="head">ITINERARIES</th>
-          <th scope="col" id="head"></th>
-        </tr>
+        <tr id="head">
+          <th scope="col" style="background: linear-gradient(to right, #041f28, #073a4a); color: white;">TRAVEL NAME</th>
+          <th scope="col" style="background: linear-gradient(to right, #073a4a, #0d637e); color: white;">START DATE</th>
+          <th scope="col" style="background: linear-gradient(to right, #0d637e, #1d809f); color: white;">END DATE</th>
+          <th scope="col" style="background: linear-gradient(to right, #1d809f, #2f94b4); color: white;">DAYS</th>
+          <th scope="col" style="background: linear-gradient(to right, #2f94b4, #40a7c7); color: white;">DESCRIPTION</th>
+          <th scope="col" style="background: linear-gradient(to right, #40a7c7, #57c0e2); color: white;">ITINERARIES</th>
+          <th scope="col" style="background: linear-gradient(to right, #57c0e2, #6dd9fb); color: white;"></th>
+      </tr>
+
       </thead>
       <tbody>
         {% if travel %}
@@ -282,4 +283,3 @@ input{
 
 
 {%endblock%}
-
