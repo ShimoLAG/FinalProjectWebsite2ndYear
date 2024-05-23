@@ -213,6 +213,7 @@ input{
             <td><a href="{{ url_for('views.destinations', itineraryID=data.itineraryID) }}">DESTINATIONS</a></td>
             <td>
                 <button class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{ data['itineraryID'] }}">Edit</button>
+                <a href="/itineraryDelete/{{ data.itineraryID }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
             </td>
           </tr>
 
