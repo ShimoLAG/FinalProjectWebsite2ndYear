@@ -260,25 +260,25 @@ ALTER TABLE `users`
 -- Constraints for table `activities`
 --
 ALTER TABLE `activities`
-  ADD CONSTRAINT `destinationID` FOREIGN KEY (`destinationID`) REFERENCES `destinations` (`destinationID`);
+  ADD CONSTRAINT `destinationID` FOREIGN KEY (`destinationID`) REFERENCES `destinations` (`destinationID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `destinations`
 --
 ALTER TABLE `destinations`
-  ADD CONSTRAINT `itineraryID` FOREIGN KEY (`itineraryID`) REFERENCES `itineraries` (`itineraryID`);
+  ADD CONSTRAINT `itineraryID` FOREIGN KEY (`itineraryID`) REFERENCES `itineraries` (`itineraryID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `itineraries`
 --
 ALTER TABLE `itineraries`
-  ADD CONSTRAINT `travelID` FOREIGN KEY (`travelID`) REFERENCES `travel` (`travelID`);
+  ADD CONSTRAINT `travelID` FOREIGN KEY (`travelID`) REFERENCES `travel` (`travelID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `travel`
 --
 ALTER TABLE `travel`
-  ADD CONSTRAINT `accountID` FOREIGN KEY (`accountID`) REFERENCES `users` (`accountID`);
+  ADD CONSTRAINT `accountID` FOREIGN KEY (`accountID`) REFERENCES `users` (`accountID`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
