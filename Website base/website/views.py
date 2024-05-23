@@ -339,7 +339,88 @@ def activityUpdate():
             flash(f"An error occurred: {e}", category="error")
         finally:
            return redirect(url_for('views.activities', destinationID=destinationID))
-        
+
+
+
+#DELETE
+
+
+@views.route('/travelDelete/<int:travelID>', methods = ['GET'])
+def travelDelete(travelID):
+    flash("deleted succesfully")
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM travel WHERE travelID=%s", (travelID,))
+    mysql.connection.commit()
+    return redirect(url_for('views.travel'))
+
+@views.route('/itineraryDelete/<int:itineraryID>', methods=['GET'])
+@login_required
+def itineraryDelete(itineraryID):
+    flash("Deleted successfully")
+    cur = mysql.connection.cursor()
+    
+    # Attempt to fetch the travelID associated with the given itineraryID
+    cur.execute("SELECT travelID FROM itineraries WHERE itineraryID=%s", (itineraryID,))
+    result = cur.fetchone()
+    
+    if result:
+        travelID = result[0]  # Extract travelID from the query result
+        cur.execute("DELETE FROM itineraries WHERE itineraryID=%s", (itineraryID,))
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for('views.itinerary', travelID=travelID))
+    else:
+        # Handle the case where no travelID is found for the given itineraryID
+        flash("Itinerary not found or already deleted.", category='error')
+        cur.close()
+        return redirect(url_for('views.itineraries'))  # Assuming you have a view for listing itineraries
+
+
+
+
+@views.route('/destinationsDelete/<int:destinationID>', methods=['GET'])
+@login_required
+def destinationsDelete(destinationID):
+    flash("Deleted successfully")
+    cur = mysql.connection.cursor()
+    
+    # Attempt to fetch the itineraryID associated with the given destinationID
+    cur.execute("SELECT itineraryID FROM destinations WHERE destinationID=%s", (destinationID,))
+    result = cur.fetchone()
+    
+    if result:
+        itineraryID = result[0]  # Extract itineraryID from the query result (using dictionary cursor)
+        cur.execute("DELETE FROM destinations WHERE destinationID=%s", (destinationID,))
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for('views.destinations', itineraryID=itineraryID))
+    else:
+        # Handle the case where no itineraryID is found for the given destinationID
+        flash("Destination not found or already deleted.", category='error')
+        cur.close()
+        return redirect(url_for('views.destinations'))  # Assuming you have a view for listing destinations
+    
+@views.route('/activitiesDelete/<int:activityID>', methods=['GET'])
+@login_required
+def activitiesDelete(activityID):
+    flash("Deleted successfully")
+    cur = mysql.connection.cursor()
+    
+    # Attempt to fetch the destinationID associated with the given activityID
+    cur.execute("SELECT destinationID FROM activities WHERE activityID=%s", (activityID,))
+    result = cur.fetchone()
+    
+    if result:
+        destinationID = result[0]  # Extract destinationID from the query result
+        cur.execute("DELETE FROM activities WHERE activityID=%s", (activityID,))
+        mysql.connection.commit()
+        cur.close()
+        return redirect(url_for('views.activities', destinationID=destinationID))
+    else:
+        # Handle the case where no destinationID is found for the given activityID
+        flash("Activity not found or already deleted.", category='error')
+        cur.close()
+        return redirect(url_for('views.destinations'))  # Assuming you have a view for listing destinations
 
 
 
