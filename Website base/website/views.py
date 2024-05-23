@@ -27,12 +27,6 @@ def home():
 @views.route('/travel', methods=['GET', 'POST'])
 @login_required
 def travel():
-    def get_account_id():
-        if current_user.is_authenticated:
-            return current_user.accountID
-        else:
-            return None
-        
     def get_travel(accountID):
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT travelID, travelName, startDate, endDate, DATEDIFF(endDate, startDate) AS days, travelDescription FROM travel WHERE accountID = %s', (accountID,))
@@ -45,30 +39,20 @@ def travel():
         startDate = request.form['startDate']
         endDate = request.form['endDate']
         travelDescription = request.form['travelDescription']
-        accountID = get_account_id()
-        if accountID is None:
-            flash("Not logged in", category='error')
-            return redirect(url_for('auth.login'))  # Redirect to login page
-        
+        accountID = current_user.accountID
 
         days = (datetime.strptime(endDate, '%Y-%m-%d') - datetime.strptime(startDate, '%Y-%m-%d')).days
-            
+
         cursor = mysql.connection.cursor()
         cursor.execute("INSERT INTO travel (accountID, travelName, startDate, endDate, days, travelDescription) VALUES (%s, %s, %s, %s, %s, %s)", (accountID, travelName, startDate, endDate, days, travelDescription))
         mysql.connection.commit()
         cursor.close()
-        
-        # Redirect to the same page to avoid resubmission on page refresh
+
         return redirect(url_for('views.travel'))
 
-    # Fetch travel data for the current user and render the template
-    accountID = get_account_id()
-    if accountID is None:
-        flash("Not logged in", category='error')
-        return redirect(url_for('auth.login'))  # Redirect to login page
-    
+    accountID = current_user.accountID
     account_travel = get_travel(accountID)
-    
+
     return render_template('travel.html', travel=account_travel)
 
 
@@ -76,12 +60,6 @@ def travel():
 @views.route('/itinerary/<int:travelID>', methods=['GET', 'POST'])
 @login_required
 def itinerary(travelID):
-    def get_account_id():
-        if current_user.is_authenticated:
-            return current_user.accountID
-        else:
-            return None
-    
     def get_itineraries_and_travel_name(travelID):
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('''
@@ -99,11 +77,9 @@ def itinerary(travelID):
         itineraryDescription = request.form.get('itineraryDescription')
         itineraryName = request.form.get('itineraryName')
         
-        
         cursor = mysql.connection.cursor()
-        print(itineraryDay)
         cursor.execute(
-            "INSERT INTO itineraries (itineraryDay, itineraryName, itineraryDescription, travelID) VALUES ( %s, %s, %s, %s)", 
+            "INSERT INTO itineraries (itineraryDay, itineraryName, itineraryDescription, travelID) VALUES (%s, %s, %s, %s)", 
             (itineraryDay, itineraryName, itineraryDescription, travelID)
         )
         mysql.connection.commit()
@@ -113,11 +89,6 @@ def itinerary(travelID):
         return redirect(url_for('views.itinerary', travelID=travelID))
 
     # Fetch itinerary data for the given travelID and render the template
-    accountID = get_account_id()
-    if accountID is None:
-        flash("You are not logged in.", category='error')
-        return redirect(url_for('auth.login'))  # Redirect to login page
-    
     itineraries_and_travel = get_itineraries_and_travel_name(travelID)
     
     return render_template('itinerary.html', itineraries=itineraries_and_travel, travelID=travelID)
@@ -125,15 +96,10 @@ def itinerary(travelID):
 
 
 
+
 @views.route('/destinations/<int:itineraryID>', methods=['GET', 'POST'])
 @login_required
-def destinations(itineraryID):  # Ensure itineraryID is passed as a parameter
-    def get_account_id():
-        if current_user.is_authenticated:
-            return current_user.accountID
-        else:
-            return None
-    
+def destinations(itineraryID):
     def get_destinations(itineraryID):
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT destinationID, zipcode, destinationName, cityName, regionName, itineraryID FROM destinations WHERE itineraryID = %s', (itineraryID,))
@@ -147,46 +113,29 @@ def destinations(itineraryID):  # Ensure itineraryID is passed as a parameter
         cityName = request.form['cityName']
         regionName = request.form['regionName']
 
-        print(f'Form Data: zipcode={zipcode}, destinationName={destinationName}, cityName={cityName}, regionName={regionName}, itineraryID={itineraryID}')
-        
         cursor = mysql.connection.cursor()
         cursor.execute("INSERT INTO destinations (zipcode, destinationName, cityName, regionName, itineraryID) VALUES (%s, %s, %s, %s, %s)", (zipcode, destinationName, cityName, regionName, itineraryID))
         mysql.connection.commit()
         cursor.close()
         
         # Redirect to the same page to avoid resubmission on page refresh
-        return redirect(url_for('views.destinations', itineraryID=itineraryID))  # Corrected url_for destination
+        return redirect(url_for('views.destinations', itineraryID=itineraryID))
 
     # Fetch destination data for the given itineraryID and render the template
-    accountID = get_account_id()
-    if accountID is None:
+    if current_user.is_authenticated:
+        destinations = get_destinations(itineraryID)
+        return render_template("destinations.html", destinations=destinations, itineraryID=itineraryID)
+    else:
         flash("Not logged in", category='error')
         return redirect(url_for('auth.login'))  # Redirect to login page
-    
-    destinations = get_destinations(itineraryID)
-    
-    return render_template("destinations.html", destinations=destinations, itineraryID=itineraryID)
+
 
 
 @views.route('/activities/<int:destinationID>', methods=['GET', 'POST'])
 @login_required
 def activities(destinationID):
-    """
-    Define a Flask view to handle GET and POST requests for activities associated with a specific destination identified by destinationID.
-    """
-    def get_account_id():
-        """
-        Helper function to retrieve the account ID of the current logged-in user.
-        """
-        if current_user.is_authenticated:
-            return current_user.accountID
-        else:
-            return None
     
     def get_activities(destinationID):
-        """
-        Function to fetch activities associated with the given destinationID from the database.
-        """
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute('SELECT activityID, activityName, activityDescription, timeFrom, timeTo, address, destinationID FROM activities WHERE destinationID = %s', (destinationID,))
         activities = cursor.fetchall()
@@ -194,16 +143,12 @@ def activities(destinationID):
         return activities
     
     if request.method == 'POST':
-        """
-        Handling POST requests to add new activities associated with the destination.
-        """
         activityName = request.form['activityName']
         timeFrom = request.form['timeFrom']
         timeTo = request.form['timeTo']
         address = request.form['address']
         activityDescription= request.form['activityDescription']
 
-        
         cursor = mysql.connection.cursor()
         cursor.execute("INSERT INTO activities (activityName, timeFrom, timeTo, address, activityDescription, destinationID) VALUES (%s, %s, %s, %s, %s, %s)", (activityName, timeFrom, timeTo, address, activityDescription, destinationID))
         mysql.connection.commit()
@@ -213,14 +158,13 @@ def activities(destinationID):
         return redirect(url_for('views.activities', destinationID=destinationID))
     
     # Fetch activity data for the given destinationID and render the template
-    accountID = get_account_id()
-    if accountID is None:
+    if current_user.is_authenticated:
+        activities = get_activities(destinationID)
+        return render_template("activities.html", activities=activities, destinationID=destinationID)
+    else:
         flash("Not logged in", category='error')
         return redirect(url_for('auth.login'))  # Redirect to login page
-    
-    activities = get_activities(destinationID)
-    
-    return render_template("activities.html", activities=activities, destinationID=destinationID)
+
 
 
 
@@ -339,8 +283,7 @@ def activityUpdate():
             flash(f"An error occurred: {e}", category="error")
         finally:
            return redirect(url_for('views.activities', destinationID=destinationID))
-
-
+        
 
 #DELETE
 
@@ -422,6 +365,22 @@ def activitiesDelete(activityID):
         cur.close()
         return redirect(url_for('views.destinations'))  # Assuming you have a view for listing destinations
 
+
+
+#SEARCH
+
+@views.route('/travelSearch', methods=['POST'])
+@login_required
+def travelSearch():
+    travelName = request.form['travelName']
+    accountID = current_user.accountID
+    
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM travel WHERE travelName LIKE %s AND accountID = %s", ('%' + travelName + '%', accountID))
+    data = cursor.fetchall()
+    cursor.close()
+    
+    return render_template('travel.html', travel=data)
 
 
 
